@@ -7,7 +7,7 @@
                  <div class="nav-back">返回</div>
                  <div class="nav-content">
                      <router-link
-                     to="/goodsDetail/buyTicket"
+                     to="/buyTicket"
                       tag="div"
                       class="sp-seat">选座购票
                       </router-link>

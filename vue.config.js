@@ -4,7 +4,8 @@ module.exports = {
     devServer: {
         proxy: {
             "/api": {
-                target: "http://39.97.33.178",
+                target: "https://m.piaoniu.com",
+
                 changeOrigin: true
             }
         }

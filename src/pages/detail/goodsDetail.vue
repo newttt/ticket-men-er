@@ -1,21 +1,17 @@
 <template>
     <div id="goodsDetail">
         <div class="detail-page">
-        <div class="detail-title">
-            <span class="back-arrows"></span>
-            <span>演出详情</span>
-            <span></span>
-        </div>
+          <detailHead></detailHead>
         <div class="detail-header">
             <div class="header-img">
 
             </div>
             <div class="header-main">
                 <div class="main-top">
-                    <!-- <img src="../img/basketball.jpg" -->
+                    <img :src="goodsInfo.poster"
                         class="poster">
                     <div class="main-left">
-                        <h3>【北京】2019国际篮联篮球世界杯决赛(92场)</h3>
+                        <h3>{{goodsInfo.name}}</h3>
                         <div class="eval">
                             <span>10.0</span>
                             <ul>
@@ -29,7 +25,7 @@
                         </div>
                         <div class="lineprice">
                             <div class="left-line">
-                                <span>2029</span>
+                                <span>{{goodsInfo.lowPrice}}</span>
                                 <span>元起</span>
                             </div>
                             <div class="right-line">
@@ -253,13 +249,13 @@
                 <div class="text">客服</div>
             </div>
             <router-link
-              to="/goodsDetail/chooseSeat"
+              to="/chooseSeat"
               tag="div"
              class="choose">
                 选座购票
             </router-link>
             <router-link
-            to="/goodsDetail/buyTicket"
+            to="/buyTicket"
             tag="div"
              class="shoppings">
                 直接购票
@@ -272,9 +268,24 @@
 </template>
 
 <script>
-
+import {goodsDetailApi} from "@api";
+import detailHead from "@lib/header";
 export default {
-    name:"goodsDetail"
+    name:"goodsDetail",
+    data() {
+      return {
+        goodsInfo:{}
+      }
+    },
+    components: {
+      detailHead,
+    },
+    async created() {
+    let data = await goodsDetailApi();
+    // console.log(data.data)
+    this.goodsInfo = data.data[0];
+    console.log(this.goodsInfo)
+  },
 }
 </script>
 
@@ -282,7 +293,7 @@ export default {
    .detail-page {
   padding-bottom: .98rem; }
 
-.detail-title {
+/* .detail-title {
   background: #fff;
   height: .88rem;
   display: flex;
@@ -300,8 +311,8 @@ export default {
   width: .22rem;
   height: .38rem;
   background-size: 100%;
-  /* background-image: url(../img/left-arrows.png);*/ 
-  } 
+   background-image: url(../img/left-arrows.png);
+  } */
 
 .detail-header {
   background-color: #fff;
