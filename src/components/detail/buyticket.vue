@@ -2,22 +2,7 @@
     <div>
         <div class="buy-ticket">
         <!-- 头部选项卡 -->
-         <div class="choose-head">
-             <div class="nav">
-                 <div class="nav-back">返回</div>
-                 <div class="nav-content">
-                     <router-link
-                     to="/buyTicket"
-                      tag="div"
-                      class="sp-seat">选座购票
-                      </router-link>
-                     <div class="cs-seat sp-seat">直接购票</div>
-                 </div>
-                 <div class="nav-right">
-                     <img src="https://static.piaoniu.com/m/static/img/hint.958a721.png">
-                 </div>
-             </div>
-         </div>
+          
          <!-- 内容 -->
          <div class="buy-page">
             <div class="shop-session">
@@ -46,42 +31,20 @@
                     </div>
                 </div>
                 <ul class="body">
-                    <li>
+                    <li 
+                    v-for="(item,index) in seatList"
+                    :key="index"
+
+                    >
                         <div class="body-tp">
-                            <span>80</span>
+                            <span>{{item.specification}}</span>
                             <span>票档</span>
                         </div>
                         <div class="type-tp">
-                            <span>E档</span>
+                            <span>{{item.desc}}</span>
                         </div>
                     </li>
-                    <li>
-                        <div class="body-tp">
-                            <span>80</span>
-                            <span>票档</span>
-                        </div>
-                        <div class="type-tp">
-                            <span>E档</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="body-tp">
-                            <span>80</span>
-                            <span>票档</span>
-                        </div>
-                        <div class="type-tp">
-                            <span>E档</span>
-                        </div>
-                    </li>
-                    <li class="item-select event-item-select">
-                        <div class="body-tp">
-                            <span>80</span>
-                            <span>票档</span>
-                        </div>
-                        <div class="type-tp">
-                            <span>E档</span>
-                        </div>
-                    </li>
+                    
                 </ul>
 
 
@@ -92,15 +55,7 @@
          <div class="bottom-fixed">
 
              <!-- 尾部赋值 选座位 -->
-             <div class="choose-num">
-                 <div class="text">数量</div>
-                 <ul>
-                     <li class="num-select">1</li>
-                     <li>2</li>
-                     <li>3</li>
-                     <li>4</li>
-                 </ul>
-             </div>
+             <numList></numList>
     <!--  -->
              <div class="gotobuy">
                  <div class="content-buy">
@@ -133,49 +88,27 @@
 </template>
 
 <script>
+import {getSeat} from "@api/detail";
+import numList from "@lib/list/numlist";
 export default {
-    name:"buyTicket"
+    name:"buyticket",
+    data() {
+      return {
+        seatList:[]
+      }
+    },
+    components:{
+      numList,
+    },
+    async created () {
+      let data = await getSeat();
+      this.seatList = data;
+      console.log(data);
+    }
 }
 </script>
-<style>
-    .choose-head {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 12;
-  width: 100%;
-  box-shadow: 0 0.02rem 0.06rem 0 rgba(0, 0, 0, 0.15);
-  background-color: #fff; }
-  .choose-head .nav {
-    height: .88rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 .28rem;
-    box-sizing: border-box; }
-    .choose-head .nav .nav-back {
-      font-size: .32rem; }
-    .choose-head .nav .nav-content {
-      justify-content: center;
-      line-height: .88rem;
-      display: flex; }
-      .choose-head .nav .nav-content .sp-seat {
-        font-size: .32rem;
-        height: .88rem;
-        color: #999;
-        margin: 0 .32rem;
-        border-bottom: .04rem solid #fff;
-        box-sizing: border-box; }
-      .choose-head .nav .nav-content .cs-seat {
-        color: #333;
-        border-color: #ff6d95; }
-    .choose-head .nav .nav-right {
-      display: flex;
-      align-items: center; }
-      .choose-head .nav .nav-right img {
-        height: .4rem;
-        width: .4rem; }
 
+<style>
 .buy-page {
   background-color: #fff;
   padding-bottom: 0;
@@ -206,7 +139,9 @@ export default {
         width: 100%; }
         .buy-page .shop-content-out .shop-content-time .event-item p {
           width: 100%;
-          text-align: left; }
+          text-align: left; 
+          font-size: .28rem
+          }
   .buy-page .event-item-select {
     position: relative;
     color: #ff2661;
@@ -270,15 +205,18 @@ export default {
         min-width: 1.92rem;
         line-height: .36rem;
         background-color: #f7f7f7;
-        color: #999; }
+        color: #999; 
+        font-size: .24rem;
+        }
         .buy-page .page-content .body li .body-tp span {
           margin-right: .1rem;
-          font-size: .28rem; }
-          .buy-page .page-content .body li .body-tp span:last-child {
-            font-size: .24rem; }
+          font-size: .28rem; 
+          color:#000;
+          }
+
         .buy-page .page-content .body li .type-tp {
           width: 100%;
-          font-size: 10px; }
+          font-size:.24rem; }
       .buy-page .page-content .body .item-select {
         border-color: #ff2661;
         color: #ff2661; }
@@ -301,7 +239,7 @@ export default {
   margin-right: 0;
   background-color: #fff;
   align-items: center;
-  box-shadow: 0px -1px 3px rgba(0, 0, 38, 0.2); }
+  box-shadow: 0 -.02rem .06rem rgba(0, 0, 38, 0.2); }
   .choose-num .text {
     font-size: .24rem;
     width: .48rem;
@@ -389,7 +327,7 @@ export default {
           width: .44rem;
           height: .44rem; }
       .gotobuy .content-buy .gotobuy-right .gotobuy-barsum {
-        margin: 0px .3rem 0 .3rem;
+        margin: 0 .3rem 0 .3rem;
         height: .88rem;
         line-height: .88rem;
         background-color: #ff2661;
@@ -398,7 +336,5 @@ export default {
         font-size: .32rem;
         color: #fff;
         width: 2rem; }
-
-/*# sourceMappingURL=buyTicket.css.map */
 
 </style>

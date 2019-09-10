@@ -2,7 +2,7 @@ import axios from "axios";
 // import loading from "@lib/loading/index.js"
 
 const http = axios.create({
-    timeout: 1000,
+    timeout: 2000,
     withCredentials: true
 })
 

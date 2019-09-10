@@ -8,11 +8,11 @@ export const goodsDetailApi = ()=>http({
 //  获取详情
     data:{
         pageIndex : 2 ,
-         categoryId : 8 ,
-         time : "",
-         sort : "",
-         seatMap : false ,
-         highestPrice : "",
-         lowestPrice :""
+        categoryId : 1 ,
+        time : "",
+        sort : "",
+        seatMap : false ,
+        highestPrice : "",
+        lowestPrice :""
     }
 })

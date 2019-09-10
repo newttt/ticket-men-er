@@ -1,8 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import goodsDetail from "./detail/goodsDetail"
-import buyTicket from "./detail/buyTicket"
-import chooseSeat from "./detail/chooseSeat"
+import ticket from "./detail/ticket"
 import comment from "./detail/comment"
 import order from "./detail/order"
 
@@ -18,8 +17,7 @@ const router = new VueRouter({
 
         },
         goodsDetail,
-        buyTicket,
-        chooseSeat,
+        ticket,
         comment,
         order
 
