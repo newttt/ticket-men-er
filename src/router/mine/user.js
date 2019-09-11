@@ -1,0 +1,26 @@
+export default{
+    path:"/user",
+    name:"user",
+    component:()=>import("@pages/mine/user"),
+    children:[
+        {
+            path:"/user",
+            redirect:"/user/all"
+        },
+        {
+            path:"all",
+            name:"all",
+            component:()=>import("@lib/user/all")
+        },
+        {
+            path:"pinlun",
+            name:"pinlun",
+            component:()=>import("@lib/user/pinlun")
+        },
+        {
+            path:"want",
+            name:"want",
+            component:()=>import("@lib/user/want")
+        }
+    ]
+}
