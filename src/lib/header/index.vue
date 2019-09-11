@@ -14,8 +14,14 @@
             title:{
                 type:String,
                 default:"演出详情"
-            }
+            },
+        },
+    methods:{
+                  // 滚动到指定的位置
+            handleScrollTop(t){
+            this.scroll.scrollTo(0,-t,300)
         }
+      }
     }
 </script>
 

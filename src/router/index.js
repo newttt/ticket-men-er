@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import goodsDetail from "./detail/goodsDetail"
+import Home from "./home";
+import City from "./city";
+import search from "./search";
 import buyTicket from "./detail/buyTicket"
 import chooseSeat from "./detail/chooseSeat"
 import comment from "./detail/comment"
@@ -14,14 +16,16 @@ const router = new VueRouter({
     routes:[
         {
             path:"/",
-            redirect:"/goodsDetail"
+            redirect:"/home"
 
         },
-        goodsDetail,
+        Home,
         buyTicket,
         chooseSeat,
         comment,
-        order
+        order,
+        City,
+        search
 
     ]
 })
