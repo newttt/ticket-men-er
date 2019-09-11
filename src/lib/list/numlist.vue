@@ -7,7 +7,7 @@
           <li 
           v-for="(item,index) in list" 
           :key="index"
-          @click="ckHandler(index)"
+          @click="ckHandler(item,index)"
           :class="classIndex == index ? 'num-select' : ''"
           >{{item}}</li>
 
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-
+import {mapState,mapMutations} from 'vuex';
 export default {
     name:"numList",
     data() {
@@ -26,11 +26,21 @@ export default {
         classIndex:0
       }
     },
+    computed: {
+      ...mapState({
+        num:state=>state.goodsList.numListIndex,
+
+      })
+    },
     methods:{
-      ckHandler(index) {
+      ckHandler(item,index) {
+        // console.log(index);
         this.classIndex = index;
-        this.$emit("getIndex",index);
-      }
+        this.getNumIndex(item);
+      },
+      ...mapMutations({
+          getNumIndex:"goodsList/getNumIndex"
+        })
     }
 }
 </script>

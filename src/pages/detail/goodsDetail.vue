@@ -12,13 +12,13 @@
             <div class="main-left">
               <h3>{{goodsInfo.name}}</h3>
               <div class="eval">
-                <span>10.0</span>
+                <span>{{goodsInfo.rank}}</span>
                 <ul>
                   <li>
-                    <img src="https://static.piaoniu.com/nuxt-static/img/starGrey.eefc1c0.png">
+                    <img src="https://static.piaoniu.com/nuxt-static/img/starYellow.b0a4b5a.png">
                   </li>
                   <li>
-                    <img src="https://static.piaoniu.com/nuxt-static/img/starGrey.eefc1c0.png">
+                    <img src="https://static.piaoniu.com/nuxt-static/img/starYellow.b0a4b5a.png">
                   </li>
                 </ul>
               </div>
@@ -116,9 +116,13 @@
                   所有评论(57)
                 </div>
               </div>
-              <div class="text-all">
+              <router-link 
+              class="text-all"
+              tag="div"
+              to="/comment"
+              >
                 全部评论57条
-              </div>
+              </router-link>
             </div>
 
 
@@ -181,6 +185,7 @@
 </template>
 
 <script>
+import {getTicket} from "@api/detail.js";
 import {mapActions,mapState, mapMutations} from "vuex"
 
   import detailHead from "@lib/header";
@@ -194,8 +199,20 @@ import {mapActions,mapState, mapMutations} from "vuex"
       detailList,
       stars
     },
-      created() {
+      async created() {
         this.getGoodsInfo();
+        // 
+        if(!this.ticketInfo || !sessionStorage.getItem("goodsItem")) {
+        let data = await getTicket();
+        console.log(data);
+        this.ticketInfo = data;
+        sessionStorage.setItem("goodsItem",JSON.stringify(data))
+      }else {
+        this.ticketInfo = sessionStorage.getItem("goodsItem");
+      }
+
+
+
 
       }, 
     methods:{

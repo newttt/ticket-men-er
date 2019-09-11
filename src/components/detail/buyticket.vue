@@ -12,8 +12,10 @@
                     </div>
                     <div class="shop-content-time">
                         <div class="event-item event-item-select">
-                            <p>
-                                2019年09月08日 周日 19:30
+                            <p
+                            v-for="(item,index) in goodsItem.events"
+                            :key="index">
+                                {{item.specification}}
                             </p>
                             <div class="select-icon">
 
@@ -33,11 +35,13 @@
                 <ul class="body">
                     <li 
                     v-for="(item,index) in seatList"
+                    :class="classNameIndex === index ? 'item-select' : ''"
                     :key="index"
-
+                    @click="chooseDesc(item.id,index)"
                     >
                         <div class="body-tp">
-                            <span>{{item.specification}}</span>
+                            <span
+                            >{{item.specification}}</span>
                             <span>票档</span>
                         </div>
                         <div class="type-tp">
@@ -63,8 +67,8 @@
                          <em>合计:</em>
                          
                          <span>
-                            <i>￥238</i>
-                            <b>￥144/张</b>
+                            <i>￥{{price * num}}</i>
+                            <b>￥{{price}}/张</b>
                          </span>
                          
                      </div>
@@ -75,7 +79,7 @@
                          </div>
                          <div class="gotobuy-barsum">
                              结算
-                             <span>(1)</span>
+                             <span>({{num}})</span>
                          </div>
                      </div>
                  </div>
@@ -89,12 +93,17 @@
 
 <script>
 import {getSeat} from "@api/detail";
+// import {mapState} from "vuex";
+import {mapState,mapActions,mapMutations} from "vuex";
 import numList from "@lib/list/numlist";
 export default {
     name:"buyticket",
     data() {
       return {
-        seatList:[]
+        seatList:[],
+        classNameIndex:0,
+        price:0,
+        goodsItem:{}
       }
     },
     components:{
@@ -104,11 +113,27 @@ export default {
       let data = await getSeat();
       this.seatList = data;
       console.log(data);
+      this.goodsItem = JSON.parse(sessionStorage.getItem("goodsItem"));
+      this.price = data[0].specification;
+    },
+    computed: {
+      ...mapState({
+        num:state=>state.goodsList.numListIndex,
+        goodsInfo:state=>state.goodsList.goodsInfo
+      }),
+    },
+    methods:{
+      chooseDesc(_id,index) {
+        this.classNameIndex = index;
+        this.price = this.seatList[index].originPrice
+      },
+
     }
 }
 </script>
 
 <style>
+ 
 .buy-page {
   background-color: #fff;
   padding-bottom: 0;
@@ -211,7 +236,6 @@ export default {
         .buy-page .page-content .body li .body-tp span {
           margin-right: .1rem;
           font-size: .28rem; 
-          color:#000;
           }
 
         .buy-page .page-content .body li .type-tp {

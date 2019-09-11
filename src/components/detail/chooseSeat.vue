@@ -119,7 +119,6 @@
 
 <script>
 // import {mapState,mapMutations} from "vuex";
-import {getTicket} from "@api/detail.js";
 import numList from "@lib/list/numlist"
 export default {
     name:"chooseSeat",
@@ -132,9 +131,16 @@ export default {
       numList
     },
     async created() {
-      let data = await getTicket();
-      console.log(data);
-      this.ticketInfo = data;
+      
+      if(!this.ticketInfo || !sessionStorage.getItem("goodsItem")) {
+        let data = await getTicket();
+        console.log(data);
+        this.ticketInfo = data;
+        sessionStorage.setItem("goodsItem",JSON.stringify(data))
+      }else {
+        this.ticketInfo = JSON.parse(sessionStorage.getItem("goodsItem"));
+      }
+    console.log(this.ticketInfo)
     }
 }
 </script>
