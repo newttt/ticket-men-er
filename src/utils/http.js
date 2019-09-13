@@ -1,8 +1,9 @@
 import axios from "axios";
-// import loading from "@lib/loading/index.js"
+import Loading from "@lib/vant/loading"
+
 
 const http = axios.create({
-    timeout: 2000,
+    timeout: 5000,
     withCredentials: true
 })
 
@@ -15,7 +16,7 @@ http.interceptors.request.use(config => {
     } else if (config.method == "post") {
         //config.headers["content-type"] = "application/x-www-form-urlencoded"
     }
-    // loading.open();
+    Loading.open(document.body);
     return config;
 }, err => {
     return Promise.reject(err);
@@ -24,7 +25,7 @@ http.interceptors.request.use(config => {
 
 http.interceptors.response.use(res => {
     if (res.status == 200) {
-        // loading.close();
+        Loading.close();
         return res.data;
     }
 })

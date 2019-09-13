@@ -2,7 +2,7 @@
     <div>
         <div class="choose-head">
             <div class="nav">
-                <div class="nav-back">返回</div>
+                <div class="nav-back" @click="ckBack()">返回</div>
                 <div class="nav-content">
                     <router-link to="/ticket/chooseSeat" tag="div" class="cs-seat sp-seat">选座购票
                     </router-link>
@@ -25,6 +25,11 @@
 <script>
 export default {
     name:"ticket",
+    methods:{
+        ckBack() {
+            this.$router.back();
+        }
+    }
     
 }
 </script>

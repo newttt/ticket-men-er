@@ -12,6 +12,8 @@ export default {
   name: "App"
 }
 </script>
-<style lang="scss">
-
+<style lang="scss" scoped>
+  div {
+    height:100%;
+  }
 </style>

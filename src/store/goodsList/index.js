@@ -1,10 +1,14 @@
 import {goodsDetailApi} from "@api";
-// import {getPrice} from "@api/detail";
+
+
 
 const state = {
     goodsInfo:{},
     numListIndex:1,
-    numList:[]
+    numList:[],
+    ticketInfo:{},
+    id:"",
+    type:"",
 }
 
 
@@ -13,30 +17,19 @@ const actions = {
     let data = await goodsDetailApi();
        commit("getInfoMutations",data.data);
    },
-   /* async getSeatPrice({commit},_id) {
-    let data = await getPrice(_id);
-       commit("getSeatPriceMutations", data.ticketGroups);
-   } */
+    
 }
 
 const mutations = {
     getInfoMutations(state,params) {
         state.goodsInfo = params[0];
+        state.id = params[0].id;
+        state.type = params[0].activityType;
     },
     getNumIndex(state,params) {
         state.numListIndex = params;
     },
-    /* getSeatPriceMutations(state,data) {
-        console.log(1);
-        let i = 1;
-        let arr = [];
-        while (data[i]) {
-            arr.push(data[i][0].ticketGroup)
-            i++
-        }
-        state.numList = null;
-        state.numList = arr;
-    } */
+    
 }
 
 

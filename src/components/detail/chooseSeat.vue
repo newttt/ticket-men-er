@@ -19,8 +19,8 @@
       <!-- 演出地图 -->
       <div class="map-seat">
         <div class="map-content">
-          <div class="map-img">
-            <img src="https://static.piaoniu.com/m/static/img/loading.2734a67.png">
+          <div class="map-img" ref="mapImg">
+            <!-- <img src="https://static.piaoniu.com/m/static/img/loading.2734a67.png"> -->
           </div>
         </div>
       </div>
@@ -106,9 +106,13 @@
               <img src="https://static.piaoniu.com/m/static/img/no-set.cac6248.png">
               <div class="price-lower-notice">降价通知</div>
             </div>
-            <div class="gotobuy-barsum">
+            <router-link
+            class="gotobuy-barsum"
+            tag="div"
+            to="/order"
+            >
               结算
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -118,29 +122,37 @@
 
 
 <script>
-// import {mapState,mapMutations} from "vuex";
+import Loading from "@lib/vant/loading";
 import numList from "@lib/list/numlist"
 export default {
     name:"chooseSeat",
-    data() {
-      return {
-        ticketInfo:{}
-      }
-    },
-    components:{
-      numList
-    },
+      components:{
+        numList
+      },
+      data() {
+        return {
+          ticketInfo:""
+        }
+      },
+   
     async created() {
-      
-      if(!this.ticketInfo || !sessionStorage.getItem("goodsItem")) {
-        let data = await getTicket();
-        console.log(data);
-        this.ticketInfo = data;
-        sessionStorage.setItem("goodsItem",JSON.stringify(data))
+      if(sessionStorage.getItem("goodsInfo")) {
+        this.tickteInfo = JSON.parse(sessionStorage.getItem("goodsInfo"))
+        
+        console.log(this.tickteInfo);
       }else {
-        this.ticketInfo = JSON.parse(sessionStorage.getItem("goodsItem"));
+        this.$router.back();
       }
-    console.log(this.ticketInfo)
+      
+    },
+    mounted() {
+      Loading.open(this.$refs.mapImg)
+    },
+    methods: {
+      ckBack() {
+        this.$router.back();
+      },
+     
     }
 }
 </script>
@@ -258,8 +270,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* img {
-      }  */
+    overflow: hidden;
+    position: relative;
   }
 
 

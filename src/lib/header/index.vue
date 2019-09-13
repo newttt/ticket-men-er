@@ -10,6 +10,7 @@
 <script>
     export default {
         name:"detailHead",
+        
         props:{
             title:{
                 type:String,

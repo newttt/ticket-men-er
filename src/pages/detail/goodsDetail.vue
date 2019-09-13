@@ -28,7 +28,7 @@
                   <span>元起</span>
                 </div>
                 <div class="right-line">
-                  已有<i>382</i>人购买
+                  {{ticketInfo.postageTip}}
                 </div>
               </div>
             </div>
@@ -171,7 +171,7 @@
           <div class="icon"></div>
           <div class="text">客服</div>
         </div>
-        <router-link to="/ticket" tag="div" class="choose">
+        <router-link to="/ticket/chooseSeat" tag="div" class="choose">
           选座购票
         </router-link>
         <router-link to="/ticket/buyticket" tag="div" class="shoppings">
@@ -185,48 +185,43 @@
 </template>
 
 <script>
-import {getTicket} from "@api/detail.js";
-import {mapActions,mapState, mapMutations} from "vuex"
-
+  import {goodsDetailApi} from "@api";
+import {getTicket} from "@api/detail";
   import detailHead from "@lib/header";
   import detailList from "@lib/list";
   import stars from "@lib/list/star";
   export default {
     name: "goodsDetail",
-
+    data() {
+      return {
+        goodsInfo:"",
+        ticketInfo:""
+      }
+    },
     components: {
-      detailHead,
+      detailHead, 
       detailList,
       stars
     },
-      async created() {
-        this.getGoodsInfo();
-        // 
-        if(!this.ticketInfo || !sessionStorage.getItem("goodsItem")) {
-        let data = await getTicket();
-        console.log(data);
-        this.ticketInfo = data;
-        sessionStorage.setItem("goodsItem",JSON.stringify(data))
-      }else {
-        this.ticketInfo = sessionStorage.getItem("goodsItem");
-      }
-
-
-
-
-      }, 
-    methods:{
-      ...mapActions({
-      getGoodsInfo:"goodsList/getGoodsInfo"
-    }),
-
-    },
-    computed: {
-      ...mapState({
-        goodsInfo:state=>state.goodsList.goodsInfo,
-        
-      })
-    },
+    async created() {
+      
+        if(!this.goodsInfo || !sessionStorage.getItem("goodsItem")) {
+          let data = await goodsDetailApi();
+          this.goodsInfo = data.data[1];
+          // console.log(this.goodsInfo);
+          console.log(data);
+          sessionStorage.setItem("goodsItem",JSON.stringify(this.goodsInfo));
+// 
+          let _id = this.goodsInfo.id;
+          let type = this.goodsInfo.areaTicketType;
+          this.ticketInfo = await getTicket(_id,type);
+          // console.log(this.ticketInfo)
+          sessionStorage.setItem("goodsInfo",JSON.stringify(this.ticketInfo))
+        }else {
+          this.goodsInfo = JSON.parse(sessionStorage.getItem("goodsItem"));
+        }
+    }
+    
 
   }
 </script>

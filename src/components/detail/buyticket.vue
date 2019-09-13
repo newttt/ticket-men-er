@@ -11,10 +11,13 @@
                         选择场次
                     </div>
                     <div class="shop-content-time">
-                        <div class="event-item event-item-select">
-                            <p
-                            v-for="(item,index) in goodsItem.events"
-                            :key="index">
+                        <div 
+                        :class="titleClassIndex == index ? 'event-item event-item-select' : 'event-item'"
+                        v-for="(item,index) in goodsItem.events"
+                        :key="index"
+                        @click="toggleHandler(index)"
+                        >
+                            <p>
                                 {{item.specification}}
                             </p>
                             <div class="select-icon">
@@ -77,10 +80,14 @@
                              <img src="https://static.piaoniu.com/m/static/img/no-set.cac6248.png">
                              <div class="price-lower-notice">降价通知</div>
                          </div>
-                         <div class="gotobuy-barsum">
+                         <router-link 
+                         class="gotobuy-barsum"
+                         tag="div"
+                         :to="{name:'order',params:{sum:price * num}}"
+                         >
                              结算
                              <span>({{num}})</span>
-                         </div>
+                         </router-link>
                      </div>
                  </div>
              </div>
@@ -93,7 +100,6 @@
 
 <script>
 import {getSeat} from "@api/detail";
-// import {mapState} from "vuex";
 import {mapState,mapActions,mapMutations} from "vuex";
 import numList from "@lib/list/numlist";
 export default {
@@ -103,23 +109,40 @@ export default {
         seatList:[],
         classNameIndex:0,
         price:0,
-        goodsItem:{}
+        goodsItem:{},
+        titleClassIndex:0
       }
     },
     components:{
       numList,
     },
     async created () {
-      let data = await getSeat();
-      this.seatList = data;
-      console.log(data);
-      this.goodsItem = JSON.parse(sessionStorage.getItem("goodsItem"));
-      this.price = data[0].specification;
+     
+
+      if(sessionStorage.getItem("goodsInfo")) {
+        this.goodsItem = JSON.parse(sessionStorage.getItem("goodsInfo"))
+        
+        console.log(this.goodsItem);
+        let eventsId = this.goodsItem.events[0].id;
+
+        console.log(eventsId);
+        let data = await getSeat(eventsId);
+        this.seatList = data;
+        this.price = data[0].originPrice;
+       
+        
+      }else {
+        this.$router.back();
+      }
+
+
+
+
     },
     computed: {
       ...mapState({
         num:state=>state.goodsList.numListIndex,
-        goodsInfo:state=>state.goodsList.goodsInfo
+
       }),
     },
     methods:{
@@ -127,7 +150,9 @@ export default {
         this.classNameIndex = index;
         this.price = this.seatList[index].originPrice
       },
-
+      toggleHandler(index) {
+          this.titleClassIndex = index;
+      }
     }
 }
 </script>
