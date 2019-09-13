@@ -1,5 +1,5 @@
 export default {
-    path: "/order",
+    path: "/order/:sum",
     name: "order",
     meta: {
         flag: false

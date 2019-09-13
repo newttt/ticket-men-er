@@ -117,8 +117,6 @@ export default {
       numList,
     },
     async created () {
-     
-
       if(sessionStorage.getItem("goodsInfo")) {
         this.goodsItem = JSON.parse(sessionStorage.getItem("goodsInfo"))
         

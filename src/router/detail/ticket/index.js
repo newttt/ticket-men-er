@@ -19,7 +19,7 @@ export default {
             component: () => import("@components/detail/chooseSeat"),
         },
         {
-            path: "buyTicket/:sum",
+            path: "buyTicket",
             name: "buyTicket",
             meta: {
                 flag: false

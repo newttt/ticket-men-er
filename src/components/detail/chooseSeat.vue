@@ -7,10 +7,11 @@
       <div class="choose-info">
         <div class="show">
           <div class="text" 
-          v-for="(item,index) in ticketInfo.events"
+          v-for="(item,index) in tickteInfo.events"
           :key="index"
-          >{{item.specification}}</div>
-          <span></span>
+          >
+          <span>{{item.specification}}</span>
+          </div>
         </div>
         <div class="drap-show">
 
@@ -99,7 +100,7 @@
         <div class="content-buy">
           <div class="total-price">
             总价:
-            <i>238元</i>
+            <i>537元</i>
           </div>
           <div class="gotobuy-right">
             <div class="price-lower">
@@ -131,7 +132,7 @@ export default {
       },
       data() {
         return {
-          ticketInfo:""
+          tickteInfo:""
         }
       },
    

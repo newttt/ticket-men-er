@@ -184,17 +184,20 @@ Vue.use(SubmitBar);
 
 import {mapState,mapActions,mapMutations} from "vuex";
   export default {
-    props:{
+   /*  props:{
       type:Number,
-      default:tickteInfo.lowPrice * 100,
-    },
+      default:this.tickteInfo.lowPrice * 100,
+    }, */
     name: "order",
     data() {
       return {
-        tickteInfo:""
+        tickteInfo:"",
+        sum:0
       }
     },
     async created () {
+      let {sum} = this.$route.params;
+      this.sum =  sum;
       if(sessionStorage.getItem("goodsItem")) {
         this.tickteInfo = JSON.parse(sessionStorage.getItem("goodsItem"))
         
@@ -202,19 +205,12 @@ import {mapState,mapActions,mapMutations} from "vuex";
       }
       
     },
-    computed: {
-     /*  ...mapState({
-        ticketInfo:state=>state.goodsList.ticketInfo,
-        goodsInfo:state=>state.goodsList.goodsInfo
-      }), */
-    },
+    
     methods:{
       ckBack() {
         this.$router.back();
       },
-      /* ...mapActions({
-        getList:"goodsList/getList"
-      }) */
+      
       onSubmit() {
         console.log(1);
       }
@@ -594,6 +590,9 @@ import {mapState,mapActions,mapMutations} from "vuex";
     justify-content: space-between;
   }
   
+
+
+  /* 插件配置*/
   .getSum .van-submit-bar__bar {
     width:100%;
     height: 100%;
@@ -619,82 +618,7 @@ import {mapState,mapActions,mapMutations} from "vuex";
     margin-left: 1.8rem;
 }
 
- /*  .gotobuy .content-buy {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    height: 100%;
-    flex: 1;
-    padding: 0 .26rem 0 .3rem;
-  }
 
-  .gotobuy .content-buy .total-price {
-    font-size: .28rem;
-    display: flex;
-    align-items: center;
-  }
-
-  .gotobuy .content-buy .total-price>span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .gotobuy .content-buy .total-price>span span i {
-    font-style: normal;
-    color: #ff2661;
-    font-size: .4rem;
-    font-weight: 700;
-  }
-
-  .gotobuy .content-buy .total-price>span span strong {
-    display: inline-block;
-    font-size: .2rem;
-    color: #999;
-    font-weight: 300;
-    margin: 0 .04rem;
-  }
-
-  .gotobuy .content-buy .total-price>span b {
-    bottom: .04rem;
-    line-height: .2rem;
-    white-space: nowrap;
-    transform: scale(0.8);
-    color: #999;
-    font-weight: 200;
-  }
-
-  .gotobuy .content-buy .gotobuy-right {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .gotobuy .content-buy .gotobuy-right .price-lower {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .gotobuy .content-buy .gotobuy-right .price-lower .arrows-up {
-    display: block;
-    width: .16rem;
-    height: .08rem;
-    background-size: 100%;
-    margin-left: .08rem;
-    background-image: url(https://static.piaoniu.com/m/static/img/arrowUp.86811d4.png);
-  }
-
-  .gotobuy .gotobuy-buy {
-    width: 152px;
-    font-size: 17px;
-    line-height: 50px;
-    background-color: #ff2661;
-    color: #fff;
-    text-align: center;
-  } */
 
   /*# sourceMappingURL=order.css.map */
 </style>

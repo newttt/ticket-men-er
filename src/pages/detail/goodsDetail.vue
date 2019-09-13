@@ -14,12 +14,10 @@
               <div class="eval">
                 <span>{{goodsInfo.rank}}</span>
                 <ul>
-                  <li>
+                  <li v-for="(item,index) in goodsInfo.ranks">
                     <img src="https://static.piaoniu.com/nuxt-static/img/starYellow.b0a4b5a.png">
                   </li>
-                  <li>
-                    <img src="https://static.piaoniu.com/nuxt-static/img/starYellow.b0a4b5a.png">
-                  </li>
+                 
                 </ul>
               </div>
               <div class="lineprice">
@@ -207,8 +205,18 @@ import {getTicket} from "@api/detail";
       
         if(!this.goodsInfo || !sessionStorage.getItem("goodsItem")) {
           let data = await goodsDetailApi();
-          this.goodsInfo = data.data[1];
+          this.goodsInfo = data.data[2];
           // console.log(this.goodsInfo);
+          
+          if(!this.goodsInfo.rank) {
+            this.goodsInfo.rank = "暂无评分";
+            
+            this.goodsInfo.ranks = [1,1,1,1,1]
+            }else {
+               this.goodsInfo.ranks = [1,1,1,1,1],
+               this.goodsInfo.ranks.length = Math.ceil(this.goodsInfo.rank / 2)
+            }
+          
           console.log(data);
           sessionStorage.setItem("goodsItem",JSON.stringify(this.goodsInfo));
 // 

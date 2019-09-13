@@ -1,5 +1,7 @@
 <template>
   <div class="content-whole">
+ 
+    <!--页面-->
     <div class="comment-page">
       <div class="comment-title">
         <span class="back-arrows" @click="ckBack()">
@@ -102,20 +104,27 @@
       </div>
     </BScroll>
     </div>
+     <!--弹出层-->
+    <Popup :toggle="flag">
+      <template>
+        <p>无人进行评论</p>
+      </template>
+    </Popup>
+  
   </div>
 </template>
 
 <script>
-  import {
-    mapState,
-    mapActions,
-    mapMutations
-  } from "vuex";
+
+ import Popup from "@lib/vant/popup/index.vue";
   import {
     getListApi
   } from "@api/detail";
   export default {
     name: "comment",
+    components:{
+      Popup
+    },
     data() {
       return {
         name: "",
@@ -123,19 +132,22 @@
         imgSrc: "",
         comList: [],
         pageIndex:1,
-        _id:""
+        _id:"",
+        flag:false
       }
     },
     async created() {
       let goodsItem = JSON.parse(sessionStorage.getItem("goodsItem"))
       this._id = goodsItem.id;
       this.name = goodsItem.properName;
+      this.flag = !Boolean(goodsItem.totalNum)
       this.time = goodsItem.timeRange;
       this.imgSrc = goodsItem.poster;
       let data = await getListApi(this._id);
       this.comList = data.data;
-      console.log(goodsItem);
-      console.log(data);
+      // console.log(this.flag)
+      // console.log(goodsItem);
+      // console.log(data);
     },
     methods: {
       ckBack() {
@@ -158,6 +170,7 @@
     updated() {
       this.$refs.scroll.handlerFinishPullUp();
     },
+
   }
 </script>
 
